@@ -1,4 +1,29 @@
-﻿<header id="page-topbar" style="background-color: #4559b9">
+﻿<style>
+    /* Style for Submenu */
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+        position: absolute;
+        left: 100%;
+        top: 0;
+        margin-top: 0;
+        display: none;
+        min-width: 200px;
+    }
+
+    .dropdown-submenu:hover .dropdown-menu {
+        display: block;
+    }
+
+    .selectable {
+        user-select: all;
+        cursor: pointer;
+    }
+</style>
+
+<header id="page-topbar" style="background-color: #4559b9">
     <div class="navbar-header" style="background-color: #4559b9">
         <div class="d-flex">
             <!-- LOGO -->
@@ -399,13 +424,29 @@
                         </div>
                     </li>
 
+                    <!-- Outpatient Department Menu -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-template" role="button">
-                            <i class="bx bx-buildings me-2"></i><span key="t-template">Outpatient Department</span> <div class="arrow-down"></div>
+                            <i class="bx bx-buildings me-2"></i>
+                            <span key="t-template">Outpatient Department</span>
+                            <div class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-template">
-                            <a href=@Url.Action("Index", "PatientReceiving") class="dropdown-item" key="t-default">Animal Bite</a>
-                            <a href=@Url.Action("Index", "PatientReceiving") class="dropdown-item" key="t-default">Dental Care</a>
+                            <a href="@Url.Action("Index", "PatientReceiving")" class="dropdown-item" key="t-default">Inbound referral</a>
+
+                            <!-- Animal Bite with Submenu -->
+                            <div class="dropdown-submenu">
+                                <a href="#" class="dropdown-item dropdown-toggle has-arrow" id="animalBiteMenu">
+                                    Animal Bite <i class="bx bx-chevron-right"> </i>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="animalBiteMenu">
+                                    <li><a href="@Url.Action("VitalSign", "PatientReceiving")" class="dropdown-item">Vital Sign</a></li>
+                                    <li><a href="@Url.Action("Vaccination", "PatientReceiving")" class="dropdown-item">Vaccination</a></li>
+                                    <li><a href="@Url.Action("Consultation", "PatientReceiving")" class="dropdown-item">Consultation</a></li>
+                                </ul>
+                            </div>
+
+                            <a href="@Url.Action("Index", "PatientReceiving")" class="dropdown-item" key="t-default">Dental Care</a>
                         </div>
                     </li>
 

@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.pTitle = "Inbound Referrals";
+    ViewBag.pageTitle = "Outpatietn Department";
+    Layout = "~/Views/Shared/Layouts/_layout_horizontal.cshtml";
+}
+<style>
+    .no-border:focus,
+    .no-border:active,
+    .no-border:focus-visible,
+    .no-border:focus-within {
+        outline: none !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-sm-4">
+                        <div class="search-box me-2 mb-2 d-inline-block">
+                            <div class="position-relative">
+                                <input type="text" class="form-control" id="searchTableList" placeholder="Search...">
+                                <i class="bx bx-search-alt search-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <div class="table-responsive">
+                    <table class="table align-middle table-nowrap table-hover dt-responsive nowrap w-100" id="userList-table">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col" style="width: 40px;">#</th>
+                                <th scope="col">Referral No.</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Complains</th>
+                                <th scope="col">Referring Facility</th>
+                                <th scope="col" style="width: 5%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 1; i <= 10; i++)
+                            {
+                                <tr>
+                                    <th>@i</th>
+                                    <td class="text-primary selectable fw-bold">@($"RF00-{i}")</td>
+                                    <td>Christian Jeed Bade</td>
+                                    <td>Animalbite and Dental</td>
+                                    <td>Norala Destrict Hospital</td>
+                                    <td>
+                                        @*<div class="btn-group">
+                                                <a href="#" class="btn btn-transparent dropdown-toggle no-border" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="mdi mdi-dots-horizontal text-primary fs-3"></i>
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item btn btn-success btn-rounded waves-effect waves-light addContact-modal mb-2"
+                                                       data-bs-toggle="modal" data-bs-target="#vitalSignModal">
+                                                        Record Vital Sign
+                                                    </a>
+                                                    <a class="dropdown-item" href="#">Another action</a>
+                                                    <a class="dropdown-item" href="#">Something else here</a>
+                                                </div>
+                                            </div>*@
+
+                                        <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light btn-sm">Arrived</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!-- end table -->
+                </div>
+                <!-- end table responsive -->
+                <div id="stacked-column-chart" data-colors='["--bs-primary", "--bs-warning", "--bs-success"]' class="apex-charts" dir="ltr"></div>
+            </div>
+        </div>
+    </div>
+</div>
