@@ -122,9 +122,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PatientReceivingController.cs" />
+    <Compile Include="Controllers\VitalSignController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handler\PaginationHandler.cs" />
+    <Compile Include="Models\ApiErrorResponse.cs" />
+    <Compile Include="Models\VitalSign.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +138,8 @@
     <Content Include="assets\css\bootstrap-rtl.min.css" />
     <Content Include="assets\css\bootstrap.css" />
     <Content Include="assets\css\bootstrap.min.css" />
+    <Content Include="assets\css\commonDesign.min.css" />
+    <Content Include="assets\css\formvalidation.min.css" />
     <Content Include="assets\css\icons-rtl.min.css" />
     <Content Include="assets\css\icons.css" />
     <Content Include="assets\css\icons.min.css" />
@@ -1852,6 +1858,7 @@
     <Content Include="packages\Newtonsoft.Json.12.0.2\Newtonsoft.Json.12.0.2.nupkg" />
     <Content Include="packages\WebGrease.1.6.0\.signature.p7s" />
     <Content Include="packages\WebGrease.1.6.0\WebGrease.1.6.0.nupkg" />
+    <Content Include="Scripts\FormValidation.js" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
@@ -1907,6 +1914,10 @@
     <Content Include="Views\PatientInfo\_patientProfile.cshtml" />
     <Content Include="Views\VitalSign\_vitalSignForm.cshtml" />
     <Content Include="Views\AnimalBite\ABVitalSign.cshtml" />
+    <Content Include="Views\VitalSign\Index.cshtml" />
+    <Content Include="Views\VitalSign\_vitalSignModal.cshtml" />
+    <Content Include="Views\VitalSign\_vitalSignTableData.cshtml" />
+    <Content Include="Views\VitalSign\SaveVitalSign.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2000,7 +2011,6 @@
     <Folder Include="assets\libs\toastr\node_modules\jquery\external\sizzle\dist\" />
     <Folder Include="assets\libs\toastr\node_modules\jquery\src\" />
     <Folder Include="assets\libs\toastr\tests\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

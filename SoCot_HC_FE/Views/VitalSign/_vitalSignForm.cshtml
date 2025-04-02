@@ -1,1 +1,93 @@
-﻿
+﻿@model SoCot_HC_FE.Models.VitalSign
+<link href="~/assets/css/formvalidation.min.css" rel="stylesheet" />
+
+<form id="vitalSignForm">
+    @Html.HiddenFor(model => model.VitalSignId, new { id = "hidden_VitalSignId" })
+    <div class="mb-3 row">
+        <label for="Systolic" class="col-md-4 col-form-label"><span class="text-danger">*</span>Systolic</label>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.Systolic, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Systolic" } })
+            <span class="text-danger inputValError" data-valmsg-for="Systolic"></span>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="Diastolic" class="col-md-4 col-form-label"><span class="text-danger">*</span>Diastolic</label>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.Diastolic, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Diastolic" } })
+            <span class="text-danger inputValError" data-valmsg-for="Diastolic"></span>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="Temperature" class="col-md-4 col-form-label"><span class="text-danger">*</span>Temperature</label>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.Temperature, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Temperature" } })
+            <span class="text-danger inputValError" data-valmsg-for="Temperature"></span>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="Height" class="col-md-4 col-form-label"><span class="text-danger">*</span>Height</label>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.Height, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Height" } })
+            <span class="text-danger inputValError" data-valmsg-for="Height"></span>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="Weight" class="col-md-4 col-form-label"><span class="text-danger">*</span>Weight</label>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Weight" } })
+            <span class="text-danger inputValError" data-valmsg-for="Weight"></span>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="RespiratoryRate" class="col-md-4 col-form-label"><span class="text-danger">*</span>Respiratory Rate</label>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.RespiratoryRate, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Respiratory Rate" } })
+            <span class="text-danger inputValError" data-valmsg-for="RespiratoryRate"></span>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="CardiacRate" class="col-md-4 col-form-label"><span class="text-danger">*</span>Cardiac Rate</label>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.CardiacRate, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Cardiac Rate" } })
+            <span class="text-danger inputValError" data-valmsg-for="CardiacRate"></span>
+        </div>
+    </div>
+</form>
+
+<script src="~/Scripts/FormValidation.js"></script>
+<script>
+    function SaveVitalSign() {
+        var data = $("#vitalSignForm").serialize();
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#556ee6",
+            cancelButtonColor: "#f46a6a",
+            confirmButtonText: "Ok"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/VitalSign/SaveVitalSign', // Matches the controller and method`
+                    type: 'POST',
+                    data: data, // Serialize form data
+                    success: function (response) {
+                        if (!response.success) {
+                            validateForm(response.errors);
+                            alert("Please fill in all required fields");
+                        } else {
+                            $("#vitalSignModal").modal('hide');
+                            LoadTable(1);
+                            alert("Vital Sign saved successfully");
+                        }
+            
+                    },
+                    error: function () {
+                        alert("Error saving data!");
+                    }
+                });
+            }
+        });
+    }
+</script>

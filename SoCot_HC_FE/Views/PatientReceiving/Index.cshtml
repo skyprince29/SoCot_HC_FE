@@ -13,6 +13,10 @@
         box-shadow: none !important;
         border: none !important;
     }
+
+    .tableButton{
+        margin: 3.5px !important;
+    }
 </style>
 
 <div class="row">
@@ -34,11 +38,11 @@
                     <table class="table align-middle table-nowrap table-hover dt-responsive nowrap w-100" id="userList-table">
                         <thead class="table-light">
                             <tr>
-                                <th scope="col" style="width: 40px;">#</th>
-                                <th scope="col">Referral No.</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Complains</th>
-                                <th scope="col">Referring Facility</th>
+                                <th scope="col" style="width: 5%;">#</th>
+                                <th scope="col" style="width: 10%;">Referral No.</th>
+                                <th scope="col" style="width: 25%;">Name</th>
+                                <th scope="col" style="width: 35%;">Complains</th>
+                                <th scope="col"  style="width:20%;">Referring Facility</th>
                                 <th scope="col" style="width: 5%;">Action</th>
                             </tr>
                         </thead>
@@ -52,21 +56,7 @@
                                     <td>Animalbite and Dental</td>
                                     <td>Norala Destrict Hospital</td>
                                     <td>
-                                        @*<div class="btn-group">
-                                                <a href="#" class="btn btn-transparent dropdown-toggle no-border" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="mdi mdi-dots-horizontal text-primary fs-3"></i>
-                                                </a>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item btn btn-success btn-rounded waves-effect waves-light addContact-modal mb-2"
-                                                       data-bs-toggle="modal" data-bs-target="#vitalSignModal">
-                                                        Record Vital Sign
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                </div>
-                                            </div>*@
-
-                                        <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light btn-sm">Arrived</button>
+                                        <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light btn-sm tableButton">Arrived</button>
                                     </td>
                                 </tr>
                             }
