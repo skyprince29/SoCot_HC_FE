@@ -42,7 +42,8 @@
                         <img src="~/assets/images/logo-light.svg" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="~/assets/images/logo-light.png" alt="" height="19">
+                        <img src="~/assets/images/Bagong Pilipinas.png" alt="" height="50"/>
+                        <label style="margin-left:10px; color:floralwhite; font-weight:bold; font-family:'Arial Unicode MS'; letter-spacing:3px">SOUTH COTABATO - UHC</label>
                     </span>
                 </a>
             </div>
@@ -390,9 +391,7 @@
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
                     <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Profile</span></a>
-                    <a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle me-1"></i> <span key="t-my-wallet">My Wallet</span></a>
                     <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end">11</span><i class="bx bx-wrench font-size-16 align-middle me-1"></i> <span key="t-settings">Settings</span></a>
-                    <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle me-1"></i> <span key="t-lock-screen">Lock screen</span></a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="#"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Logout</span></a>
                 </div>
@@ -424,6 +423,18 @@
                         </div>
                     </li>
 
+                    <!-- Patient Menu -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboard" role="button">
+                            <i class="bx bx-home-circle me-2"></i><span key="t-dashboards">Profiles</span> <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-template">
+                            <a href=@Url.Action("Registration", "Persons") class="dropdown-item" key="t-default">Registration</a>
+                            <a href=@Url.Action("List", "Persons") class="dropdown-item" key="t-default">List</a>
+                            <a href=@Url.Action("Index", "Household") class="dropdown-item" key="t-default">Household</a>
+                        </div>
+                    </li>
+
                     <!-- Outpatient Department Menu -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-template" role="button">
@@ -447,6 +458,16 @@
                             </div>
 
                             <a href="@Url.Action("Index", "PatientReceiving")" class="dropdown-item" key="t-default">Dental Care</a>
+                        </div>
+                    </li>
+
+                    <!-- Emergency Room Menu -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboard" role="button">
+                            <i class="bx bx-buildings me-2"></i><span key="t-dashboards">Emergency Room Department</span> <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-template">
+                            <a href=@Url.Action("Index", "Persons") class="dropdown-item" key="t-default">Sample</a>
                         </div>
                     </li>
 

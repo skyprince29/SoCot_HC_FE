@@ -1,0 +1,74 @@
+﻿@model IEnumerable<SoCot_HC_FE.Models.Person>
+
+
+@{
+    ViewBag.pTitle = "List";
+    ViewBag.pageTitle = "Profiles";
+    Layout = "~/Views/Shared/Layouts/_layout_horizontal.cshtml";
+}
+<link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+<style>
+    .rm-padding {
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+        border: none !important
+    }
+</style>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-sm-12 d-flex justify-content-end">
+                        <div class="me-2 mb-2 d-inline-block">
+                            <div class="position-relative">
+                                <button type="button" class="btn btn-primary waves-effect waves-light" onclick="location.href='@Url.Action("Registration", "Persons")'">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="search-box me-3 mb-3 d-inline-block">
+                            <div class="position-relative">
+                                <input type="text" class="form-control" id="searchTableList" placeholder="Search..." border-radius="0px !important">
+                                <i class="bx bx-search-alt search-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <div class="table-responsive">
+                    <table class="table align-middle table-nowrap table-hover dt-responsive nowrap w-100" id="personsList-table">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Firstname</th>
+                                <th>Middlename</th>
+                                <th>Lastname</th>
+                                <th>Birthdate</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var person in Model)
+                            {
+                                <tr>
+                                    <td>@person.Firstname</td>
+                                    <td>@person.Middlename</td>
+                                    <td>@person.Lastname</td>
+                                    <td>@person.Birthdate</td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = person.PersonId }) |
+                                        @Html.ActionLink("Details", "Details", new { id = person.PersonId }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = person.PersonId })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!-- end table -->
+                </div>
+                <!-- end table responsive -->
+                <div id="stacked-column-chart" data-colors='["--bs-primary", "--bs-warning", "--bs-success"]' class="apex-charts" dir="ltr"></div>
+            </div>
+        </div>
+    </div>
+</div>
