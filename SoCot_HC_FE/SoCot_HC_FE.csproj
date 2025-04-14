@@ -120,6 +120,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\FacilityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PatientReceivingController.cs" />
     <Compile Include="Controllers\PersonsController.cs" />
@@ -128,11 +129,17 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handler\PaginationHandler.cs" />
+    <Compile Include="Models\Address.cs" />
     <Compile Include="Models\ApiErrorResponse.cs" />
+    <Compile Include="Models\Barangay.cs" />
+    <Compile Include="Models\CityMunicipality.cs" />
+    <Compile Include="Models\Facility.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\PersonList.cs" />
+    <Compile Include="Models\Province.cs" />
     <Compile Include="Models\VitalSign.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestData\FacilityData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\app-rtl.min.css" />
@@ -1924,6 +1931,8 @@
     <Content Include="Views\VitalSign\SaveVitalSign.cshtml" />
     <Content Include="Views\Persons\List.cshtml" />
     <Content Include="Views\Persons\Registration.cshtml" />
+    <Content Include="Views\Facility\List.cshtml" />
+    <Content Include="Views\Facility\_facilityTableData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

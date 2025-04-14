@@ -1,0 +1,169 @@
+﻿@model SoCot_HC_FE.Models.Facility
+@{
+    ViewBag.pTitle = "Facilities";
+    ViewBag.pageTitle = "Facility";
+    Layout = "~/Views/Shared/Layouts/_layout_horizontal.cshtml";
+}
+
+
+<link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+<style>
+    .rm-padding {
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+        border: none !important
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-sm-12 d-flex justify-content-end">
+                        <div class="me-2 mb-2 d-inline-block">
+                            <div class="position-relative">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddFacilityModal">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="search-box me-3 mb-3 d-inline-block">
+                            <div class="position-relative">
+                                <input type="text" class="form-control" id="searchTableList" placeholder="Search..." border-radius="0px !important">
+                                <i class="bx bx-search-alt search-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <div class="table-responsive">
+                    <table class="table align-middle table-nowrap table-hover dt-responsive nowrap w-100" id="personsList-table">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 5%;">#</th>
+                                <th style="width: 25%;">Facility Name</th>
+                                <th style="width: 20%;">Address</th>
+                                <th style="width: 20%;">Email</th>
+                                <th style="width: 20%;">Contact Number</th>
+                                <th style="width: 10%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableData">
+
+                        </tbody>
+                    </table>
+                    <!-- end table -->
+                </div>
+                <!-- end table responsive -->
+                <div id="stacked-column-chart" data-colors='["--bs-primary", "--bs-warning", "--bs-success"]' class="apex-charts" dir="ltr"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AddFacilityModal" tabindex="-1" aria-labelledby="AddFacilityModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddFacilityModalLabel">Add Facility</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="FacilityForm" method="post">
+
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-12">
+
+                                    @using (Html.BeginForm("Create", "Facility", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                                    {
+                                        <div class="row mb-12">
+                                            <div class="col-md-4">
+                                                <label class="form-label">Accreditation No</label>
+                                                @Html.TextBoxFor(m => m.AccreditationNo, new { @class = "form-control", placeholder = "Enter Accreditaion No." })
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Facility Name</label>
+                                                @Html.TextBoxFor(m => m.FacilityName, new { @class = "form-control", placeholder = "Enter Facility Name" })
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Email Address</label>
+                                                @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", placeholder = "Enter Email Address" })
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-12">
+                                            <div class="col-md-4">
+                                                <label class="form-label">Contact Number</label>
+                                                @Html.TextBoxFor(m => m.ContactNumber, new { @class = "form-control", placeholder = "Enter Contact Number" })
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Telephone Number</label>
+                                                @Html.TextBoxFor(m => m.TelephoneNumber, new { @class = "form-control", placeholder = "Enter Telephone Number" })
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Sector</label>
+                                                @Html.TextBoxFor(m => m.Sector, new { @class = "form-control", placeholder = "Enter Sector" })
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-3 d-flex justify-content-center">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <a href="@Url.Action("Index", "Persons")" class="btn btn-secondary">Cancel</a>
+                                        </div>
+                                    }
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <!-- Sweet Alerts js -->
+    <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/assets/js/pages/sweet-alerts.init.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            LoadTable(1);
+        });
+
+
+        function LoadTable(pageNo) {
+            var keyword = "";
+            var limit = 10;
+            $("#tableData").html("");
+            $.ajax({
+                type: 'GET',
+                url: '/Facility/Loadtable',
+                data: {
+                    pageNo: pageNo,
+                    limit: limit,
+                    keyword: keyword
+                },
+                success: function (result) {
+                    setTimeout(function () {
+                        $("#tableData").html(result);
+                    }, 1000);
+                },
+                error: function () {
+                    alert("An error occurred while fetching the data.")
+                }
+            });
+
+        }
+    </script>
+}
