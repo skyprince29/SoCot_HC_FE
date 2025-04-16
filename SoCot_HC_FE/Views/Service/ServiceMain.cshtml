@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "ServiceMain";
+    Layout = "~/Views/VitalSign/Index.cshtml";
+
+    ViewBag.pTitle = "Service";
+    ViewBag.pageTitle = "Service";
+    Layout = "~/Views/Shared/Layouts/_layout_horizontal.cshtml";
+}
+<link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+<style>
+    .rm-padding {
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+        border: none !important
+    }
+</style>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-sm-12 d-flex justify-content-end">
+                        <div class="me-2 mb-2 d-inline-block">
+                            <div class="position-relative">
+                                <button type="button" class="btn btn-primary waves-effect waves-light" onclick="ShowServiceForm(0)">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="search-box me-3 mb-3 d-inline-block">
+                            <div class="position-relative">
+                                <input type="text" class="form-control" id="searchTableList" placeholder="Search..." border-radius="0px !important">
+                                <i class="bx bx-search-alt search-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <div class="table-responsive">
+                    <table class="table align-middle table-nowrap table-hover dt-responsive nowrap w-100" id="userList-table">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col" style="width: 5%;">#</th>
+                                <th scope="col" style="width: 10%;">Facility</th>
+                                <th scope="col" style="width: 25%;">Service Classification</th>
+                                <th scope="col" style="width: 35%;">ServiceName</th>
+                                <th scope="col" style="width: 20%;">Description</th>
+                                <th scope="col" style="width: 5%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableData">
+                        </tbody>
+                    </table>
+                    <!-- end table -->
+                </div>
+                <!-- end table responsive -->
+                <div id="stacked-column-chart" data-colors='["--bs-primary", "--bs-warning", "--bs-success"]' class="apex-charts" dir="ltr"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Views/Service/_ServiceFormModal.cshtml")
+@section scripts{
+    <!-- Sweet Alerts js -->
+    <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/assets/js/pages/sweet-alerts.init.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            LoadTable(1);
+        });
+
+        function ShowServiceForm(id) {
+            $.ajax({
+                url: '/Service/ShowServiceForm',
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function (response) {
+                    $("#serviceModalBody").html(response);
+                    $("#serviceModal").modal('show');
+                },
+                error: function () {
+                    alert("Error saving data!");
+                }
+            });
+        }
+
+        function LoadTable(pageNo) {
+            var keyword = "";
+            var limit = 10;
+            $("#tableData").html("");
+            $.ajax({
+                type: 'GET',
+                url: '/Service/LoadTable',
+                data: {
+                    pageNo: pageNo,
+                    limit: limit,
+                    keyword: keyword
+                },
+                success: function (result) {
+                    setTimeout(function () {
+                        $("#tableData").html(result);
+                    }, 1000);
+                },
+                error: function () {
+                    alert("An error occurred while fetching the data.")
+                    //setTimeout(function () {
+                    //    $("#tableSpinner").hide();
+                    //}, 1000);
+                }
+            });
+
+        }
+    </script>
+}
+

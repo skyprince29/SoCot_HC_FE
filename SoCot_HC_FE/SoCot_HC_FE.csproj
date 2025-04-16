@@ -120,10 +120,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Configurations\Api\Base\BaseApiConfig.cs" />
+    <Compile Include="Configurations\Api\Endpoints\ServiceApi.cs" />
+    <Compile Include="Configurations\Api\Endpoints\ServiceClassificationApi.cs" />
     <Compile Include="Controllers\FacilityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PatientReceivingController.cs" />
     <Compile Include="Controllers\PersonsController.cs" />
+    <Compile Include="Controllers\ServiceClassificationController.cs" />
+    <Compile Include="Controllers\ServiceContoller.cs" />
     <Compile Include="Controllers\VitalSignController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -131,12 +136,15 @@
     <Compile Include="Handler\PaginationHandler.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\ApiErrorResponse.cs" />
+    <Compile Include="Models\AuditInfo.cs" />
     <Compile Include="Models\Barangay.cs" />
     <Compile Include="Models\CityMunicipality.cs" />
     <Compile Include="Models\Facility.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\PersonList.cs" />
     <Compile Include="Models\Province.cs" />
+    <Compile Include="Models\Service.cs" />
+    <Compile Include="Models\ServiceClassification.cs" />
     <Compile Include="Models\VitalSign.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestData\FacilityData.cs" />
@@ -1933,6 +1941,10 @@
     <Content Include="Views\Persons\Registration.cshtml" />
     <Content Include="Views\Facility\List.cshtml" />
     <Content Include="Views\Facility\_facilityTableData.cshtml" />
+    <Content Include="Views\Service\ServiceMain.cshtml" />
+    <Content Include="Views\Service\_ServiceTableData.cshtml" />
+    <Content Include="Views\Service\_ServiceFormModal.cshtml" />
+    <Content Include="Views\Service\_ServiceForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,98 @@
+﻿@model SoCot_HC_FE.Models.Service
+<link href="~/assets/css/formvalidation.min.css" rel="stylesheet" />
+<link href="~/assets/libs/select2/css/select2.min.css" rel="stylesheet" />
+
+<form id="serviceForm">
+    @Html.HiddenFor(model => model.ServiceId, new { id = "hidden_service_id" })
+    @Html.HiddenFor(model => model.CreatedBy, new { id = "hidden_created_by" })
+    @Html.HiddenFor(model => model.CreatedDate, new { id = "hidden_created_date" })
+    <div class="mb-3 row">
+        <label for="FacilityId" class="col-md-4 col-form-label"><span class="text-danger">*</span>Facility</label>
+        <div class="col-md-8">
+            @*@Html.EditorFor(model => model.FacilityId, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Systolic" } })*@
+            @Html.DropDownList("FacilityId", new List<SelectListItem>(), null, new { @class = "form-control searchable-dropdown", id = "FacilitiesDropdown", @data_placeholder = "Select Facility" })
+            <span class="text-danger inputValError" data-valmsg-for="FacilityId"></span>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="ServiceClassificationId" class="col-md-4 col-form-label"><span class="text-danger">*</span>Service Classification</label>
+        <div class="col-md-8">
+            @Html.DropDownList("ServiceClassificationId", new List<SelectListItem>(), null, new { @class = "form-control searchable-dropdown", id = "ServiceClassificationDropdown", @data_placeholder = "Select Service Classification" })
+            <span class="text-danger inputValError" data-valmsg-for="ServiceClassificationId"></span>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="ServiceName" class="col-md-4 col-form-label"><span class="text-danger">*</span>Service Name</label>
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.ServiceName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Service name" } })
+            <span class="text-danger inputValError" data-valmsg-for="ServiceName"></span>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="Description" class="col-md-4 col-form-label"><span class="text-danger">*</span>Description</label>
+        <div class="col-md-8">
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Enter Description", style = "width: 100%;" })
+            <span class="text-danger inputValError" data-valmsg-for="Description"></span>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+    <script src="~/assets/libs/select2/js/select2.min.js"></script>
+    <script src="~/Scripts/FormValidation.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Initialize select2 for both dropdowns
+            $('.searchable-dropdown').select2({
+                placeholder: function() {
+                    return $(this).data('placeholder');
+                },
+                allowClear: true,
+                width: '100%'
+            });
+
+            // Load Service Classifications
+            $.ajax({
+                url: '@Url.Action("GetServiceClassifications", "ServiceClassification")',
+                type: 'GET',
+                success: function (data) {
+                    var options = '<option value="">Select Service Classification</option>';
+                    $.each(data, function (index, item) {
+                        options += '<option value="' + item.ServiceClassificationId + '">' + item.ClassificationName + '</option>';
+                    });
+                    $('#ServiceClassificationDropdown').html(options);
+                    
+                    // Set selected value if editing
+                    @if (Model.ServiceClassificationId > 0)
+                    {
+                        @:$('#ServiceClassificationDropdown').val('@Model.ServiceClassificationId').trigger('change');
+                    }
+                }
+            });
+
+            $('#serviceForm').submit(function (e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    url: '@Url.Action("Save", "Service")',
+                    type: 'POST',
+                    data: formData,
+                    success: function (result) {
+                        if (result.success) {
+                            $('#serviceModal').modal('hide');
+                            // Refresh your data grid or list here
+                            // For example: refreshServiceList();
+                        } else {
+                            alert(result.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Error saving service');
+                    }
+                });
+            });
+        });
+    </script>
+}

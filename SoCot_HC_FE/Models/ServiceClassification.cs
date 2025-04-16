@@ -10,5 +10,6 @@ namespace SoCot_HC_FE.Models
     {
         public int ServiceClassificationId { get; set; }
         public string Name { get; set; }
+        public bool IsActive { get; set; }
     }
 }
