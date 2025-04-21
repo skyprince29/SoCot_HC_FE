@@ -12,12 +12,13 @@
             <td>@d.EmailAddress</td>
             <td>@d.ContactNumber</td>
             <td>
-                <div class="btn-group  rm-padding">
+                <div class="btn-group  rm-padding"> 
                     <a href="#" class="btn btn-transparent dropdown-toggle no-border  rm-padding" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="mdi mdi-dots-horizontal text-primary fs-3"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-sm p-1">
-                        <a class="dropdown-item btn-rounded " href="#" onclick="recordVitalSign(@d.Id)">Record Vital Sign</a>
+                        <a class="dropdown-item btn-rounded " href="#" onclick="AddFacility(@d.FacilityId)">Edit</a>
+                        @*<a class="dropdown-item btn-rounded " href="#" onclick="AddFacility(@d.FacilityId)">Delete</a>*@
                     </div>
                 </div>
             </td>

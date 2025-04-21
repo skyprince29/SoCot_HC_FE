@@ -24,9 +24,7 @@
                     <div class="col-sm-12 d-flex justify-content-end">
                         <div class="me-2 mb-2 d-inline-block">
                             <div class="position-relative">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddFacilityModal">
-                                    Add
-                                </button>
+                                <button type="button" class="btn btn-primary waves-effect waves-light" onclick="AddFacility(0)">Add</button>
                             </div>
                         </div>
                     </div>
@@ -53,7 +51,6 @@
                             </tr>
                         </thead>
                         <tbody id="tableData">
-
                         </tbody>
                     </table>
                     <!-- end table -->
@@ -65,71 +62,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="AddFacilityModal" tabindex="-1" aria-labelledby="AddFacilityModal" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="AddFacilityModalLabel">Add Facility</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="FacilityForm" method="post">
-
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-12">
-
-                                    @using (Html.BeginForm("Create", "Facility", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
-                                    {
-                                        <div class="row mb-12">
-                                            <div class="col-md-4">
-                                                <label class="form-label">Accreditation No</label>
-                                                @Html.TextBoxFor(m => m.AccreditationNo, new { @class = "form-control", placeholder = "Enter Accreditaion No." })
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label">Facility Name</label>
-                                                @Html.TextBoxFor(m => m.FacilityName, new { @class = "form-control", placeholder = "Enter Facility Name" })
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label">Email Address</label>
-                                                @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", placeholder = "Enter Email Address" })
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-12">
-                                            <div class="col-md-4">
-                                                <label class="form-label">Contact Number</label>
-                                                @Html.TextBoxFor(m => m.ContactNumber, new { @class = "form-control", placeholder = "Enter Contact Number" })
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label">Telephone Number</label>
-                                                @Html.TextBoxFor(m => m.TelephoneNumber, new { @class = "form-control", placeholder = "Enter Telephone Number" })
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label">Sector</label>
-                                                @Html.TextBoxFor(m => m.Sector, new { @class = "form-control", placeholder = "Enter Sector" })
-                                            </div>
-                                        </div>
-
-                                        <div class="mt-3 d-flex justify-content-center">
-                                            <button type="submit" class="btn btn-primary">Save</button>
-                                            <a href="@Url.Action("Index", "Persons")" class="btn btn-secondary">Cancel</a>
-                                        </div>
-                                    }
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
+@Html.Partial("~/Views/Facility/_addFacilityModal.cshtml")
 
 @section scripts{
     <!-- Sweet Alerts js -->
@@ -139,6 +72,7 @@
     <script>
         $(document).ready(function () {
             LoadTable(1);
+            
         });
 
 
@@ -164,6 +98,25 @@
                 }
             });
 
+        }
+
+        function AddFacility(facilityId) {
+            $.ajax({
+                url: '/Facility/Add',
+                type: 'GET',
+                data: {
+                    facilityId: facilityId
+                },
+                success: function (response) {
+                    $("#addFacilityModalBody").html(response);
+                    ["LN", "HN","BN","Subd","Prk", "Street"].forEach(id => document.getElementById(id)?.style.setProperty("display", "none"));
+                    $("#AddFacilityModal").modal('show');
+                   
+                },
+                error: function () {
+                    alert("Error saving data!");
+                }
+            });
         }
     </script>
 }

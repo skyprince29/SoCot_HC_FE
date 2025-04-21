@@ -1945,6 +1945,9 @@
     <Content Include="Views\Persons\Registration.cshtml" />
     <Content Include="Views\Facility\List.cshtml" />
     <Content Include="Views\Facility\_facilityTableData.cshtml" />
+    <Content Include="Views\Address\_addressForm.cshtml" />
+    <Content Include="Views\Facility\_addFacilityModal.cshtml" />
+    <Content Include="Views\Facility\_addFacilityForm.cshtml" />
     <Content Include="Views\Service\ServiceMain.cshtml" />
     <Content Include="Views\Service\_ServiceTableData.cshtml" />
     <Content Include="Views\Service\_ServiceFormModal.cshtml" />
