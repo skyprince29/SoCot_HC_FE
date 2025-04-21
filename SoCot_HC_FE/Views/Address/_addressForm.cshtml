@@ -44,61 +44,99 @@
         <label for="Sitio">Sitio/Purok</label>
         <input type="text" class="form-control" name="Sitio" id="Sitio" onchange="addressKpress(this.id,'txtSitio')" required />
     </div>
+
     <div class="form-group col-4">
         <label for="ProvinceId">Province</label>
-        @Html.DropDownListFor(
-            model => model.ProvinceId,
+        @Html.DropDownListFor(model => model.ProvinceId,
             ViewBag.ProvincesList as List<SelectListItem>,
             "-- Select Province --",
-            new { @class = "form-control", id = "ProvinceId" }
-        )
+            new { @class = "form-control select2", id = "ProvinceId" })
     </div>
 
     <div class="form-group col-4">
-        <label for="MunicipalityId">City/Municipality</label>
-       @* @Html.DropDownListFor(model => model.AddressId, Enumerable.Empty<SelectListItem>(), "-- Select Municipality/City --", new { @class = "form-control", id = "MunicipalityId" })*@
+        <label for="MunicipalityId">Municipality</label>
+        <select id="MunicipalityId" name="MunicipalityId" class="form-control select2">
+            <option value="">-- Select Municipality --</option>
+        </select>
     </div>
 
     <div class="form-group col-4">
         <label for="BarangayId">Barangay</label>
-       @* @Html.DropDownListFor(model => model.BarangayId, Enumerable.Empty<SelectListItem>(), "-- Select Barangay --", new { @class = "form-control", id = "BarangayId" })*@
+        <select id="BarangayId" name="BarangayId" class="form-control select2">
+            <option value="">-- Select Barangay --</option>
+        </select>
     </div>
+
+
+
 
 </form>
 
 <script>
     $(document).ready(function () {
-        $('#ProvinceId').change(function () {
+        $('#ProvinceId').on('change', function () {
             const provinceId = $(this).val();
-            $('#MunicipalityId').empty().append('<option>Loading...</option>');
-            $('#BarangayId').empty().append('<option>-- Select Barangay --</option>');
+
+            // Reset dropdowns
+            $('#MunicipalityId').html('<option value="">-- Loading --</option>');
+            $('#BarangayId').html('<option value="">-- Select Barangay --</option>');
 
             if (provinceId) {
-                $.getJSON('/Facility/GetMunicipalities', { provinceId: provinceId }, function (data) {
-                    $('#MunicipalityId').empty().append('<option>-- Select Municipality/City --</option>');
-                    $.each(data, function (i, item) {
-                        $('#MunicipalityId').append($('<option>', {
-                            value: item.Id,
-                            text: item.Name
-                        }));
-                    });
+                $.ajax({
+                    url: '/Facility/LoadMunicipalities',
+                    type: 'GET',
+                    data: { provinceId: provinceId },
+                    success: function (data) {
+                        if (data.success === false) {
+                            alert(data.message);
+                            $('#MunicipalityId').html('<option value="">-- No municipalities found --</option>');
+                            return;
+                        }
+
+                        let options = '<option value="">-- Select Municipality --</option>';
+                        $.each(data.data, function (i, item) {
+                            options += `<option value="${item.MunicipalityId}">${item.MunicipalityName}</option>`;
+                        });
+
+                        $('#MunicipalityId').html(options);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(`AJAX Error: ${status} - ${error}`);
+                        alert('Failed to load municipalities.');
+                        $('#MunicipalityId').html('<option value="">-- Error loading --</option>');
+                    }
                 });
             }
         });
+        // Handle municipality change event
+        $('#MunicipalityId').on('change', function () {
+            const cityMunicipalId = $(this).val();
 
-        $('#MunicipalityId').change(function () {
-            const municipalityId = $(this).val();
-            $('#BarangayId').empty().append('<option>Loading...</option>');
+            $('#BarangayId').html('<option value="">-- Loading --</option>');
 
-            if (municipalityId) {
-                $.getJSON('/Facility/GetBarangays', { municipalityId: municipalityId }, function (data) {
-                    $('#BarangayId').empty().append('<option>-- Select Barangay --</option>');
-                    $.each(data, function (i, item) {
-                        $('#BarangayId').append($('<option>', {
-                            value: item.Id,
-                            text: item.Name
-                        }));
-                    });
+            if (cityMunicipalId) {
+                // Make an AJAX request to load barangays
+                $.ajax({
+                    url: '/Facility/LoadBarangays',
+                    type: 'GET',
+                    data: { cityMunicipalId: cityMunicipalId },
+                    // Assuming this is inside your AJAX success handler
+                    success: function (response) {
+                        if (response.success) {
+                            var barangayDropdown = $('#BarangayId');
+
+                            // Clear existing options and add the default
+                            barangayDropdown.empty().append('<option value="">-- Select Barangay --</option>');
+
+                            // Loop through barangay data and populate options
+                            $.each(response.data, function (i, item) {
+                                barangayDropdown.append(`<option value="${item.BarangayId}">${item.BarangayName}</option>`);
+                            });
+                        } else {
+                            alert("Failed to load barangays.");
+                        }
+                    }
+
                 });
             }
         });

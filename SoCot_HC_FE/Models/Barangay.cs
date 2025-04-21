@@ -10,16 +10,10 @@ namespace SoCot_HC_FE.Models
 {
     public class Barangay
     {
-        public int barangay_id { get; set; }
-
-     
-        public int city_municipality_id { get; set; }
-        public CityMunicipality CityMunicipality { get; set; }
-
-        public string barangay_name { get; set; }
-        public int province_code { get; set; }
-        public int city_municipality_code { get; set; }
-        public int barangay_code { get; set; }
-        public int population_count { get; set; }
+        public int BarangayId { get; set; }
+        public  string BarangayName { get; set; }
+        public int MunicipalityId { get; set; }
+        public virtual  Municipality Municipality { get; set; }
+        public virtual ICollection<Address> Address { get; set; } = new List<Address>();
     }
 }

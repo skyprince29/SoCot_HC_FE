@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SoCot_HC_FE.Configurations.Api.Endpoints;
 using SoCot_HC_FE.Handler;
 using SoCot_HC_FE.Models;
 using SoCot_HC_FE.TestData;
@@ -21,11 +22,13 @@ namespace SoCot_HC_FE.Controllers
 
         private FacilityData FacilityData = new FacilityData();
         private readonly HttpClient _httpClient;
+        private readonly FacilityApi _facilityApi;
 
 
         public FacilityController()
         {
             _httpClient = new HttpClient();
+            _facilityApi = new FacilityApi();
         }
         // GET: Facility
         public ActionResult List()
@@ -35,14 +38,26 @@ namespace SoCot_HC_FE.Controllers
 
         public async Task<ActionResult> LoadTable(int pageNo, int limit, string keyword)
         {
-            PaginationHandler<Facility> paginatedResult = null;
-            bool isForTesting = bool.TryParse(ConfigurationManager.AppSettings["IsForTesting"], out bool result) && result;
-            if (isForTesting)
+      
+            try
             {
-                paginatedResult = await FacilityData.GetListofFacility(pageNo, limit);
+                string completeRoute = _facilityApi.GetPagedFacilities(pageNo, limit, keyword);
+                HttpResponseMessage response = await _httpClient.GetAsync(completeRoute);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return Json(new { success = false, message = "Failed to load data from API." }, JsonRequestBehavior.AllowGet);
+                }
+
+                string responseData = await response.Content.ReadAsStringAsync();
+                var paginatedResult = JsonConvert.DeserializeObject<PaginationHandler<Facility>>(responseData);
+
                 return PartialView("~/Views/Facility/_facilityTableData.cshtml", paginatedResult);
             }
-            return View();
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred: " + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpGet]
@@ -95,6 +110,7 @@ namespace SoCot_HC_FE.Controllers
                     string BaseRoute = ConfigurationManager.AppSettings["BaseRoute"];
                     string AddressBaseRoute = ConfigurationManager.AppSettings["AddressBaseRoute"];
                     string GetProvinces = ConfigurationManager.AppSettings["GetProvince"];
+
                     string completeRoute = BaseRoute + AddressBaseRoute + GetProvinces;
                     HttpResponseMessage getResponse = await _httpClient.GetAsync($"{completeRoute}");
                     if (getResponse.IsSuccessStatusCode)
@@ -113,9 +129,51 @@ namespace SoCot_HC_FE.Controllers
                     }
                 }
             }
-            
+
 
             return PartialView("~/Views/Facility/_addFacilityForm.cshtml", facility);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> LoadMunicipalities(int provinceId)
+        {
+            string BaseRoute = ConfigurationManager.AppSettings["BaseRoute"];
+            string AddressBaseRoute = ConfigurationManager.AppSettings["AddressBaseRoute"];
+            string GetMunicipality = ConfigurationManager.AppSettings["GetMunicipality"];
+
+            string fullUrl = $"{BaseRoute}{AddressBaseRoute}{GetMunicipality}?ProvinceId={provinceId}";
+
+            HttpResponseMessage response = await _httpClient.GetAsync(fullUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var municipalities = JsonConvert.DeserializeObject<List<Municipality>>(json);
+                return Json(new { success = true, data = municipalities }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { success = false, message = "Failed to load municipalities." }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> LoadBarangays(int cityMunicipalId)
+        {
+            string BaseRoute = ConfigurationManager.AppSettings["BaseRoute"];
+            string AddressBaseRoute = ConfigurationManager.AppSettings["AddressBaseRoute"];
+            string GetBarangay = ConfigurationManager.AppSettings["GetBarangay"];
+
+            string fullUrl = $"{BaseRoute}{AddressBaseRoute}{GetBarangay}?CityMunicipalId={cityMunicipalId}";
+
+            HttpResponseMessage response = await _httpClient.GetAsync(fullUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var barangays = JsonConvert.DeserializeObject<List<Barangay>>(json);
+
+                return Json(new { success = true, data = barangays }, JsonRequestBehavior.AllowGet); // <-- wrap in success:true
+            }
+
+            return Json(new { success = false, message = "Failed to load barangays." }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -162,27 +220,6 @@ namespace SoCot_HC_FE.Controllers
             }
         }
 
-        //[HttpGet]
-        //public JsonResult GetMunicipalities(int provinceId)
-        //{
-        //    var list = db.Municipalities
-        //                 .Where(m => m.ProvinceId == provinceId)
-        //                 .Select(m => new { m.Id, m.Name })
-        //                 .ToList();
-
-        //    return Json(list, JsonRequestBehavior.AllowGet);
-        //}
-
-        //[HttpGet]
-        //public JsonResult GetBarangays(int municipalityId)
-        //{
-        //    var list = db.Barangays
-        //                 .Where(b => b.MunicipalityId == municipalityId)
-        //                 .Select(b => new { b.Id, b.Name })
-        //                 .ToList();
-
-        //    return Json(list, JsonRequestBehavior.AllowGet);
-        //}
 
     }
 }

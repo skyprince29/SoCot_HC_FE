@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Configurations\Api\Base\BaseApiConfig.cs" />
+    <Compile Include="Configurations\Api\Endpoints\FacilityApi.cs" />
     <Compile Include="Configurations\Api\Endpoints\ServiceApi.cs" />
     <Compile Include="Configurations\Api\Endpoints\ServiceClassificationApi.cs" />
     <Compile Include="Controllers\FacilityController.cs" />
