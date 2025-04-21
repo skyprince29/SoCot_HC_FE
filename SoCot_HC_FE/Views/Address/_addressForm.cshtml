@@ -1,0 +1,106 @@
+﻿@model SoCot_HC_FE.Models.Address
+<link href="~/assets/css/formvalidation.min.css" rel="stylesheet" />
+@{
+    bool fromFacilityForm = ViewData["FromFacilityForm"] != null && (bool)ViewData["FromFacilityForm"];
+}
+
+<form id="addressForm">
+    @Html.HiddenFor(model => model.AddressId, new { id = "hidden_AddressId" })
+
+
+
+
+    <div class="form-group col-4" id="HN">
+        <label for="HouseNo">House Number</label>
+        <input type="text" class="form-control" name="HouseNo" id="HouseNo" onchange="addressKpress(this.id,'txtHouseNo')" required />
+    </div>
+
+
+    <div class="form-group col-4" id="BN">
+        <label for="BlockNo">Block Number</label>
+        <input type="text" class="form-control" name="BlockNo" id="BlockNo" onchange="addressKpress(this.id,'txtBlockNo')" required />
+    </div>
+
+
+    <div class="form-group col-4" id="LN">
+        <label for="LotNo">Lot Number</label>
+        <input type="text" class="form-control" name="LotNo" id="LotNo" onchange="addressKpress(this.id,'txtLotNo')" required />
+    </div>
+
+
+    <div class="form-group col-4" id="Street">
+        <label for="Street">Street</label>
+        <input type="text" class="form-control" name="Street" id="Street" onchange="addressKpress(this.id,'txtStreet')" required />
+    </div>
+
+
+    <div class="form-group col-4" id="Subd">
+        <label for="Subdivision">Subdivision</label>
+        <input type="text" class="form-control" name="Subdivision" id="Subdivision" onchange="addressKpress(this.id,'txtSubdivision')" required />
+    </div>
+
+
+    <div class="form-group col-4" id="Prk">
+        <label for="Sitio">Sitio/Purok</label>
+        <input type="text" class="form-control" name="Sitio" id="Sitio" onchange="addressKpress(this.id,'txtSitio')" required />
+    </div>
+    <div class="form-group col-4">
+        <label for="ProvinceId">Province</label>
+        @Html.DropDownListFor(
+            model => model.ProvinceId,
+            ViewBag.ProvincesList as List<SelectListItem>,
+            "-- Select Province --",
+            new { @class = "form-control", id = "ProvinceId" }
+        )
+    </div>
+
+    <div class="form-group col-4">
+        <label for="MunicipalityId">City/Municipality</label>
+       @* @Html.DropDownListFor(model => model.AddressId, Enumerable.Empty<SelectListItem>(), "-- Select Municipality/City --", new { @class = "form-control", id = "MunicipalityId" })*@
+    </div>
+
+    <div class="form-group col-4">
+        <label for="BarangayId">Barangay</label>
+       @* @Html.DropDownListFor(model => model.BarangayId, Enumerable.Empty<SelectListItem>(), "-- Select Barangay --", new { @class = "form-control", id = "BarangayId" })*@
+    </div>
+
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('#ProvinceId').change(function () {
+            const provinceId = $(this).val();
+            $('#MunicipalityId').empty().append('<option>Loading...</option>');
+            $('#BarangayId').empty().append('<option>-- Select Barangay --</option>');
+
+            if (provinceId) {
+                $.getJSON('/Facility/GetMunicipalities', { provinceId: provinceId }, function (data) {
+                    $('#MunicipalityId').empty().append('<option>-- Select Municipality/City --</option>');
+                    $.each(data, function (i, item) {
+                        $('#MunicipalityId').append($('<option>', {
+                            value: item.Id,
+                            text: item.Name
+                        }));
+                    });
+                });
+            }
+        });
+
+        $('#MunicipalityId').change(function () {
+            const municipalityId = $(this).val();
+            $('#BarangayId').empty().append('<option>Loading...</option>');
+
+            if (municipalityId) {
+                $.getJSON('/Facility/GetBarangays', { municipalityId: municipalityId }, function (data) {
+                    $('#BarangayId').empty().append('<option>-- Select Barangay --</option>');
+                    $.each(data, function (i, item) {
+                        $('#BarangayId').append($('<option>', {
+                            value: item.Id,
+                            text: item.Name
+                        }));
+                    });
+                });
+            }
+        });
+    });
+</script>

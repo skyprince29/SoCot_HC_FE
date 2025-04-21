@@ -1,0 +1,157 @@
+﻿
+@model SoCot_HC_FE.Models.Facility
+<link href="~/assets/css/formvalidation.min.css" rel="stylesheet" />
+
+<form id="FacilityForm" method="post">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12">
+
+
+                    @using (Html.BeginForm("Create", "Facility", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                    {
+                        List<SelectListItem> _sector = new List<SelectListItem>();
+                        _sector.Add(new SelectListItem
+                        {
+                            Text = "GOVERNMENT",
+                            Value = "GOVERNMENT"
+                        });
+                        _sector.Add(new SelectListItem
+                        {
+                            Text = "PRIVATE",
+                            Value = "PRIVATE"
+                        });
+
+
+                        List<SelectListItem> _levels = new List<SelectListItem>();
+                        _levels.Add(new SelectListItem
+                        {
+                            Text = "LEVEL 0",
+                            Value = "LEVEL 0"
+                        });
+                        _levels.Add(new SelectListItem
+                        {
+                            Text = "LEVEL 1",
+                            Value = "LEVEL 1"
+                        });
+                        _levels.Add(new SelectListItem
+                        {
+                            Text = "LEVEL 2",
+                            Value = "LEVEL 2"
+                        });
+                        _levels.Add(new SelectListItem
+                        {
+                            Text = "LEVEL 3",
+                            Value = "LEVEL 3"
+                        });
+                        _levels.Add(new SelectListItem
+                        {
+                            Text = "APEX",
+                            Value = "APEX"
+                        });
+
+                        @Html.HiddenFor(model => model.FacilityId, new { id = "hidden_VitalSignId" })
+                        @Html.HiddenFor(model => model.CreatedBy, new { id = "hidden_VitalSignId" })
+                        @Html.HiddenFor(model => model.CreatedDate, new { id = "hidden_VitalSignId" })
+                        @Html.HiddenFor(model => model.AddressId, new { id = "hidden_VitalSignId" })
+
+                        <div class="row mb-12">
+                            <div class="col-md-4">
+                                <label class="form-label">Accreditation No</label>
+                                @Html.TextBoxFor(m => m.AccreditationNo, new { @class = "form-control", placeholder = "Enter Accreditaion No." })
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Facility Name</label>
+                                @Html.TextBoxFor(m => m.FacilityName, new { @class = "form-control", placeholder = "Enter Facility Name" })
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Email Address</label>
+                                @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", placeholder = "Enter Email Address" })
+                            </div>
+                        </div>
+                        <br />
+
+                        <div class="row mb-12">
+                            <div class="col-md-4">
+                                <label class="form-label">Contact Number</label>
+                                @Html.TextBoxFor(m => m.ContactNumber, new { @class = "form-control", placeholder = "Enter Contact Number" })
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Sector</label>
+                                @Html.DropDownListFor(model => model.Sector, _sector, "-- Type of Sector --", new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Level of Facility</label>
+                                @Html.DropDownListFor(model => model.FacilityLevel, _levels, "-- Level --", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.FacilityLevel, "", new { @class = "text-danger" })
+
+                            </div>
+
+                        </div>
+
+                        <br />
+                        <div class="row mb-12">
+                            @Html.Partial("~/Views/Address/_addressForm.cshtml", Model.Address)
+                        </div>
+                        <div class="mt-2 d-flex justify-content-center">
+                            <div>
+                                <div>
+                                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-check-input" })
+                                    @Html.LabelFor(model => model.IsActive, "Active", new { htmlAttributes = new { @class = "form-check-label" } })
+                                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+                @*<div style="text-align: right;">
+                    <button type="button" class="btn btn-primary waves-effect waves-light" onclick="SaveFacility()">Save Changes</button>
+                </div>*@
+                
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<script>
+    function SaveFacility() {
+        var data = $("#addFacilityForm").serialize();
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#556ee6",
+            cancelButtonColor: "#f46a6a",
+            confirmButtonText: "Ok"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/Facility/SaveFacility', // Matches the controller and method`
+                    type: 'POST',
+                    data: data, // Serialize form data
+                    success: function (response) {
+                        if (!response.success) {
+                            validateForm(response.errors);
+                            alert("Please fill in all required fields");
+                        } else {
+                            $("#addFacilityForm").modal('hide');
+                            LoadTable(1);
+                            alert("Facility saved successfully");
+                        }
+
+                    },
+                    error: function () {
+                        alert("Error saving data!");
+                    }
+                });
+            }
+        });
+    }
+</script>
