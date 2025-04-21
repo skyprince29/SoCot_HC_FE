@@ -127,9 +127,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PatientReceivingController.cs" />
     <Compile Include="Controllers\PersonsController.cs" />
+    <Compile Include="Controllers\SchoolAgeProfileController.cs" />
     <Compile Include="Controllers\ServiceClassificationController.cs" />
     <Compile Include="Controllers\ServiceContoller.cs" />
     <Compile Include="Controllers\VitalSignController.cs" />
+    <Compile Include="Controllers\WRAController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -143,9 +145,11 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\PersonList.cs" />
     <Compile Include="Models\Province.cs" />
+    <Compile Include="Models\SchoolAgeProfile.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\ServiceClassification.cs" />
     <Compile Include="Models\VitalSign.cs" />
+    <Compile Include="Models\WRA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestData\FacilityData.cs" />
   </ItemGroup>
@@ -1945,6 +1949,14 @@
     <Content Include="Views\Service\_ServiceTableData.cshtml" />
     <Content Include="Views\Service\_ServiceFormModal.cshtml" />
     <Content Include="Views\Service\_ServiceForm.cshtml" />
+    <Content Include="Views\WRA\List.cshtml" />
+    <Content Include="Views\WRA\_WRAForm.cshtml" />
+    <Content Include="Views\WRA\_WRAModal.cshtml" />
+    <Content Include="Views\WRA\_WRATableData.cshtml" />
+    <Content Include="Views\SchoolAgeProfile\SchoolAgeList.cshtml" />
+    <Content Include="Views\SchoolAgeProfile\_SchoolAgeForm.cshtml" />
+    <Content Include="Views\SchoolAgeProfile\_SchoolAgeModel.cshtml" />
+    <Content Include="Views\SchoolAgeProfile\_SchoolAgeTableData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

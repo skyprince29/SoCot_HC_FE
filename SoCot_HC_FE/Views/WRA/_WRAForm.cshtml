@@ -1,0 +1,251 @@
+﻿@model SoCot_HC_FE.Models.WRA
+<link href="~/assets/css/formvalidation.min.css" rel="stylesheet" />
+
+<form id="WRAForm">
+    <!-- Date Of Assessment -->
+    <div id="WraDateOfAssessment" class="mb-3 row">
+        <label for="WraDateOfAssessment" class="col-md-4 col-form-label">
+            <span class="text-danger">*</span>Date Of Assessment
+        </label>
+        <div class="col-md-8">
+            @Html.TextBoxFor(model => model.WraDateOfAssessment, new { @class = "form-control", @type = "date", placeholder = "Enter Date Of Assessment" })
+            <span class="text-danger inputValError" data-valmsg-for="WraDateOfAssessment"></span>
+        </div>
+    </div>
+
+
+    <!-- Fecundity -->
+    <div id="Fecundity" class="mb-3 row">
+        <label class="col-md-4 col-form-label"><span class="text-danger">*</span>Fecundity</label>
+        <div class="col-md-8 d-flex align-items-center gap-4">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Fecundity" value="Fecund" id="FecundRadio" />
+                <label class="form-check-label" for="FecundRadio">Fecund</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Fecundity" value="Infecund" id="InfecundRadio" />
+                <label class="form-check-label" for="InfecundRadio">Infecund</label>
+            </div>
+            <span class="text-danger inputValError" data-valmsg-for="Fecundity"></span>
+        </div>
+    </div>
+
+    <!-- Have Partner -->
+    <div id="HavePartner" class="mb-3 row">
+        <label class="col-md-4 col-form-label"><span class="text-danger">*</span>Do you have a partner?</label>
+        <div class="col-md-8 d-flex align-items-center gap-4">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="HavePartner" value="true" id="HavePartnerYes" />
+                <label class="form-check-label" for="HavePartnerYes">Yes</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="HavePartner" value="false" id="HavePartnerNo" />
+                <label class="form-check-label" for="HavePartnerNo">No</label>
+            </div>
+            <span class="text-danger inputValError" data-valmsg-for="HavePartner"></span>
+        </div>
+    </div>
+
+    <!-- Using Any FP Method -->
+    <div id="AUsingAnyFPMethod" class="mb-3 row">
+        <label for="UsingAnyFPMethod" class="col-md-4 col-form-label"><span class="text-danger">*</span>Are you currently using any FP Method?</label>
+        <div class="col-md-8 d-flex align-items-center gap-4">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="UsingAnyFPMethod" value="true" id="UsingAnyFPYes" />
+                <label class="form-check-label" for="UsingAnyFPYes">Yes</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="UsingAnyFPMethod" value="false" id="UsingAnyFPNo" />
+                <label class="form-check-label" for="UsingAnyFPNo">No</label>
+            </div>
+            <span class="text-danger inputValError" data-valmsg-for="UsingAnyFPMethod"></span>
+        </div>
+    </div>
+
+
+    <!-- Plan to have more children -->
+    <div id="AWraPlanToHaveMoreChildren" class="mb-3 row">
+        <label for="WraPlanToHaveMoreChildren" class="col-md-4 col-form-label"><span class="text-danger">*</span>Do you plan to have more children?</label>
+        <div class="col-md-8 d-flex align-items-center gap-4">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="WraPlanToHaveMoreChildren" value="true" id="PlanMoreChildrenYes" />
+                <label class="form-check-label" for="PlanMoreChildrenYes">Yes</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="WraPlanToHaveMoreChildren" value="false" id="PlanMoreChildrenNo" />
+                <label class="form-check-label" for="PlanMoreChildrenNo">No</label>
+            </div>
+            <span class="text-danger inputValError" data-valmsg-for="WraPlanToHaveMoreChildren"></span>
+        </div>
+    </div>
+
+    <!-- If yes, when -->
+    <div id="AWraPlanToHveMoreChildrenDecision" class="mb-3 row">
+        <label for="WraPlanToHveMoreChildrenDecision" class="col-md-4 col-form-label">
+            <span class="text-danger">*</span>If YES, when?
+        </label>
+        <div class="col-md-8 d-flex align-items-center gap-4">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="WraPlanToHveMoreChildrenDecision" value="Now" id="WraNow" />
+                <label class="form-check-label" for="WraNow">Now</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="WraPlanToHveMoreChildrenDecision" value="Spacing" id="WraSpacing" />
+                <label class="form-check-label" for="WraSpacing">Spacing</label>
+            </div>
+            <span class="text-danger inputValError" data-valmsg-for="WraPlanToHveMoreChildrenDecision"></span>
+        </div>
+    </div>
+
+
+    <!-- For Counseling -->
+    <div id="AForCounseling" class="mb-3 row">
+        <label class="col-md-4 col-form-label"><span class="text-danger">*</span>For Counseling</label>
+        <div class="col-md-8 d-flex align-items-center gap-4">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ForCounseling" value="true" id="ForCounselingYes" />
+                <label class="form-check-label" for="ForCounselingYes">Yes</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ForCounseling" value="false" id="ForCounselingNo" />
+                <label class="form-check-label" for="ForCounselingNo">No</label>
+            </div>
+            <span class="text-danger inputValError" data-valmsg-for="ForCounseling"></span>
+        </div>
+    </div>
+
+    <!-- FP Type -->
+    <div id="AFPTypeRadio" class="mb-3 row">
+        <label class="col-md-4 col-form-label"><span class="text-danger">*</span>What Type?</label>
+        <div class="col-md-8 d-flex align-items-center gap-4">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="FPType" value="Modern" id="ModernRadio" />
+                <label class="form-check-label" for="ModernRadio">Modern</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="FPType" value="Traditional" id="TraditionalRadio" />
+                <label class="form-check-label" for="TraditionalRadio">Traditional</label>
+            </div>
+            <span class="text-danger inputValError" data-valmsg-for="FPType"></span>
+        </div>
+    </div>
+
+    <!-- FP Method -->
+    <div id="AFPMethod" class="mb-3 row">
+        <label for="FPMethod" class="col-md-4 col-form-label"><span class="text-danger">*</span>What Method?</label>
+        <div class="col-md-8">
+            @Html.DropDownListFor(model => model.FPMethod,
+                new SelectList(new[] {
+                    new { Value = "", Text = "-- SELECT METHOD CURRENTLY USED --" },
+                    new { Value = "Calendar Method", Text = "Calendar Method" },
+                    new { Value = "Condom", Text = "Condom" },
+                    new { Value = "Depo-Medroxy Progestone Acetate(DMPA)", Text = "Depo-Medroxy Progestone Acetate(DMPA)" },
+                    new { Value = "Combined Injectables Contraceptives (CIC)", Text = "Combined Injectables Contraceptives (CIC)" },
+                    new { Value = "Female Sterilization / Bilateral Tubal Ligation (BTL)", Text = "Female Sterilization / BTL" },
+                    new { Value = "Herbal", Text = "Herbal" },
+                    new { Value = "Implant", Text = "Implant" },
+                    new { Value = "Intra-Uterine-Device-Interval", Text = "IUD - Interval" },
+                    new { Value = "Intra-Uterine-Device-Postpartum", Text = "IUD - Postpartum" },
+                    new { Value = "Lactational Ammenorrhea Method", Text = "Lactational Ammenorrhea Method" },
+                    new { Value = "Natural Family Planning-Basal Body Temperature", Text = "NFP - BBT" },
+                    new { Value = "Natural Family Planning-Cervical Mucus Method", Text = "NFP - CMM" },
+                    new { Value = "Natural Family Planning-Standard Days Method", Text = "NFP - SDM" },
+                    new { Value = "Natural Family Planning-Symptothermal Method", Text = "NFP - STM" },
+                    new { Value = "No-Scalpel Vasectomy", Text = "No-Scalpel Vasectomy" },
+                    new { Value = "Pills-Combined Oral Contraceptives", Text = "Pills - COC" },
+                    new { Value = "Pills-Progestin Only Pill", Text = "Pills - POP" },
+                    new { Value = "Rhythm Method", Text = "Rhythm Method" },
+                    new { Value = "Withdrawal Method", Text = "Withdrawal Method" },
+                }, "Value", "Text", Model.FPMethod),
+                htmlAttributes: new { @class = "form-control" })
+            <span class="text-danger inputValError" data-valmsg-for="FPMethod"></span>
+        </div>
+    </div>
+
+    <!-- Shift to Modern Method -->
+    <div id="AShiftToModernMethod" class="mb-3 row">
+        <label class="col-md-4 col-form-label"><span class="text-danger">*</span>Would you like to shift to modern method?</label>
+        <div class="col-md-8 d-flex align-items-center gap-4">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ShiftToModernMethod" value="true" id="ShiftToModernYes" />
+                <label class="form-check-label" for="ShiftToModernYes">Yes</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="ShiftToModernMethod" value="false" id="ShiftToModernNo" />
+                <label class="form-check-label" for="ShiftToModernNo">No</label>
+            </div>
+            <span class="text-danger inputValError" data-valmsg-for="ShiftToModernMethod"></span>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(function () {
+        $('input[name="HavePartner"]').on('click', function () {
+            if ($(this).val() === 'true') {
+                $('#AUsingAnyFPMethod').show();
+            } else {
+                $('#AUsingAnyFPMethod, #AFPTypeRadio, #AFPMethod, #AWraPlanToHaveMoreChildren, #AWraPlanToHveMoreChildrenDecision, #AForCounseling, #AShiftToModernMethod').hide();
+
+                // Clear values
+                $('input[name="UsingAnyFPMethod"], input[name="WraPlanToHaveMoreChildren"], input[name="WraPlanToHveMoreChildrenDecision"], input[name="FPType"], input[name="ForCounseling"], input[name="ShiftToModernMethod"]').prop('checked', false);
+                $('#FPMethod').val('');
+            }
+        });
+
+        $('input[name="UsingAnyFPMethod"]').on('click', function () {
+            if ($(this).val() === 'true') {
+                $('#AFPTypeRadio, #AFPMethod').show();
+                $('#AWraPlanToHaveMoreChildren, #AWraPlanToHveMoreChildrenDecision, #AForCounseling, #AShiftToModernMethod').hide();
+
+                // Reset unnecessary fields
+                $('input[name="WraPlanToHaveMoreChildren"], input[name="WraPlanToHveMoreChildrenDecision"], input[name="ForCounseling"], input[name="ShiftToModernMethod"]').prop('checked', false);
+                $('#FPMethod').val('');
+            } else {
+                $('#AFPTypeRadio, #AFPMethod').hide();
+                $('#AWraPlanToHaveMoreChildren').show();
+                $('#AWraPlanToHveMoreChildrenDecision, #AForCounseling, #AShiftToModernMethod').hide();
+
+                // Reset unnecessary fields
+                $('input[name="WraPlanToHveMoreChildrenDecision"], input[name="FPType"], input[name="ForCounseling"], input[name="ShiftToModernMethod"]').prop('checked', false);
+                $('#FPMethod').val('');
+            }
+        });
+
+        $('input[name="WraPlanToHaveMoreChildren"]').on('click', function () {
+            if ($(this).val() === 'true') {
+                $('#AWraPlanToHveMoreChildrenDecision').show();
+            } else {
+                $('#AWraPlanToHveMoreChildrenDecision').hide();
+                $('#AForCounseling').hide();
+                $('input[name="WraPlanToHveMoreChildrenDecision"]').prop('checked', false);
+                $('#AForCounseling').find('input[type="radio"]').prop('checked', false);
+            }
+        });
+
+        $(function () {
+            $('input[name="WraPlanToHveMoreChildrenDecision"]').on('click', function () {
+                if ($(this).val() == 'Spacing') {
+                    $('#AForCounseling').show();
+                }
+                else {
+                    $('#AForCounseling').hide();
+                    $('#AForCounseling').find('input[type="radio"]').prop('checked', false);
+                }
+            });
+        });
+
+        $('input[name="FPType"]').on('click', function () {
+            if ($(this).val() === 'Traditional') {
+                $('#AShiftToModernMethod').show();
+            } else {
+                $('#AShiftToModernMethod').hide();
+                $('#AShiftToModernMethod').find('input[type="radio"]').prop('checked', false);
+            }
+        });
+
+        // Initially hide optional blocks
+        $('#AUsingAnyFPMethod, #AFPTypeRadio, #AFPMethod, #AWraPlanToHaveMoreChildren, #AWraPlanToHveMoreChildrenDecision, #AForCounseling, #AShiftToModernMethod').hide();
+    });
+</script>
+
