@@ -14,7 +14,7 @@ namespace SoCot_HC_FE.Configurations.Api.Endpoints
 
         public ServiceClassificationApi()
         {
-            _serviceClassificationEndpoint = ConfigurationManager.AppSettings["ServiceClassfication"];  // Gets "api/v1/Service"
+            _serviceClassificationEndpoint = ConfigurationManager.AppSettings["ServiceClassification"];  // Gets "api/v1/Service"
         }
 
         public string GetServiceClassificationUrl(int id)

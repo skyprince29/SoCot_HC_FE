@@ -8,6 +8,7 @@
     Layout = "~/Views/Shared/Layouts/_layout_horizontal.cshtml";
 }
 <link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+<link href="~/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 <style>
     .rm-padding {
         padding-top: 0px !important;
@@ -65,6 +66,12 @@
     <!-- Sweet Alerts js -->
     <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script src="~/assets/js/pages/sweet-alerts.init.js"></script>
+    <script src="~/assets/libs/select2/js/select2.min.js"></script>
+    <script src="~/Scripts/custom/select2-init.js"></script>
+    <script src="~/Scripts/custom/modal-handler.js"></script>
+    <script src="~/Scripts/custom/dropdown-loader.js"></script>
+
+
 
     <script>
         $(document).ready(function () {
@@ -72,19 +79,45 @@
         });
 
         function ShowServiceForm(id) {
-            $.ajax({
-                url: '/Service/ShowServiceForm',
-                type: 'GET',
-                data: {
-                    id: id
-                },
-                success: function (response) {
-                    $("#serviceModalBody").html(response);
-                    $("#serviceModal").modal('show');
-                },
-                error: function () {
-                    alert("Error saving data!");
+            showModal(
+                '#serviceModal',
+                '/Service/ShowServiceForm',
+                { id: id },
+                function ($modalBody) {
+                    // Read the hidden values (since dropdowns are not yet loaded)
+                    var currentFacilityId = $modalBody.find('#hidden_facility_id').val() || 0;
+                    var currentServiceClassificationId = $modalBody.find('#hidden_service_classification_id').val() || 0;
+                    console.log(currentFacilityId, currentServiceClassificationId);
+                    loadFacilities(currentFacilityId);
+                    loadServiceClassifications(currentServiceClassificationId);
+                    initAllSelect2($modalBody);
                 }
+            );
+        }
+
+        function loadFacilities(selectedId) {
+            populateDropdown({
+                url: '/Facility/GetFacilities',
+                dropdownSelector: '#FacilitiesDropdown',
+                valueField: 'FacilityId',
+                textField: 'FacilityName',
+                placeholder: 'Select Facility',
+                data: { isActiveOnly: true, currentId: selectedId},
+                selectedId: selectedId
+            });
+
+        }
+
+        // This function will load the service classifications dynamically.
+        function loadServiceClassifications(selectedId) {
+            populateDropdown({
+                url: '/ServiceClassification/GetServiceClassifications',
+                dropdownSelector: '#ServiceClassificationDropdown',
+                valueField: 'ServiceClassificationId',
+                textField: 'Name',
+                placeholder: 'Select Service Classification',
+                data: { isActiveOnly: true, currentId: selectedId },
+                selectedId: selectedId
             });
         }
 
@@ -112,8 +145,31 @@
                     //}, 1000);
                 }
             });
-
         }
+
+
+        function saveServiceForm() {
+            var formData = $('#serviceForm').serialize();
+
+            $.ajax({
+                url: $('#serviceForm').data('url') || '/Service/SaveService',
+                type: 'POST',
+                data: formData,
+                success: function (result) {
+                    if (result.success) {
+                        $('#serviceModal').modal('hide');
+                        LoadTable(1);
+                        showAlert('success', result.message || 'Service saved successfully.');
+                    } else {
+                        showAlert('danger', result.message || 'Failed to save service.');
+                    }
+                },
+                error: function () {
+                    showAlert('danger', 'Error saving service.');
+                }
+            });
+        }
+
     </script>
 }
 

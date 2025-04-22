@@ -73,6 +73,10 @@ namespace SoCot_HC_FE.Controllers
                     
                     return Json(new { success = false, message = "Error retrieving service" });
                 }
+                else
+                {
+                    service.IsActive = true;
+                }
 
                 // If no id, return empty form for creating new service
                 return PartialView("~/Views/Service/_ServiceForm.cshtml", service);

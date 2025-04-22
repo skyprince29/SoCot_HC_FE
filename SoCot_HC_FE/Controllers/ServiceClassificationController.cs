@@ -43,12 +43,12 @@ namespace SoCot_HC_FE.Controllers
             }
         }
 
-            // GET: ServiceClassification/GetServiceClassifications
+        // GET: ServiceClassification/GetServiceClassifications
         public async Task<ActionResult> GetServiceClassifications(bool isActiveOnly = true, int? currentId = null)
         {
             try
             {
-                string completeRoute = _serviceClassificationApi.GetServiceClassifications(isActiveOnly, currentId.Value);
+                string completeRoute = _serviceClassificationApi.GetServiceClassifications(isActiveOnly, currentId ?? 0);
                 var response = await _httpClient.GetAsync(completeRoute);
 
                 if (response.IsSuccessStatusCode)

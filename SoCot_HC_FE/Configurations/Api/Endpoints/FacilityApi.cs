@@ -16,7 +16,18 @@ namespace SoCot_HC_FE.Configurations.Api.Endpoints
             _facilityEndpoint = ConfigurationManager.AppSettings["Facility"];  // Gets "api/v1/Facility"
         }
 
+        public string GetFacilities(bool isActiveOnly = true, int? currentId = null)
+        {
+            var queryParams = new Dictionary<string, object>();
 
+            // Only add parameters that have values
+            queryParams.Add("isActiveOnly", isActiveOnly);
+            if (currentId.HasValue && currentId.Value > 0)
+            {
+                queryParams.Add("currentId", currentId);
+            }
+            return BuildUrl($"{_facilityEndpoint}/GetFacilities", queryParams);
+        }
 
         public string GetPagedFacilities(int pageNo, int limit, string keyword = null)
         {

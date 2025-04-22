@@ -36,6 +36,29 @@ namespace SoCot_HC_FE.Controllers
             return View();
         }
 
+        // GET: ServiceClassification/GetFacilities
+        public async Task<ActionResult> GetFacilities(bool isActiveOnly = true, int? currentId = null)
+        {
+            try
+            {
+                string completeRoute = _facilityApi.GetFacilities(isActiveOnly, currentId ?? 0);
+                var response = await _httpClient.GetAsync(completeRoute);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    List<Facility> facilities = JsonConvert.DeserializeObject<List<Facility>>(jsonResponse);
+                    return Json(facilities, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { success = false, message = "Error retrieving facilities" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         public async Task<ActionResult> LoadTable(int pageNo, int limit, string keyword)
         {
       

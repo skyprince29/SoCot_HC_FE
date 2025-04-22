@@ -1882,6 +1882,10 @@
     <Content Include="packages\Newtonsoft.Json.12.0.2\Newtonsoft.Json.12.0.2.nupkg" />
     <Content Include="packages\WebGrease.1.6.0\.signature.p7s" />
     <Content Include="packages\WebGrease.1.6.0\WebGrease.1.6.0.nupkg" />
+    <Content Include="Scripts\custom\alert.js" />
+    <Content Include="Scripts\custom\dropdown-loader.js" />
+    <Content Include="Scripts\custom\modal-handler.js" />
+    <Content Include="Scripts\custom\select2-init.js" />
     <Content Include="Scripts\FormValidation.js" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
